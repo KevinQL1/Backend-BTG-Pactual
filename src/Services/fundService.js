@@ -86,6 +86,10 @@ module.exports = class FundService {
                 amount: record.amount || 0
             }));
         } catch (error) {
+            if (error.message.includes('Subscription not found')) {
+                throw error;
+            }
+            
             console.error(`Error en getSubscriptionsByUserId para ${userId}:`, error);
             throw new Error('No se pudieron obtener las suscripciones del usuario');
         }

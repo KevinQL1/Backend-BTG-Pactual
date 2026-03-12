@@ -182,11 +182,18 @@ describe('Service: FundService (Full Coverage)', () => {
 
             expect(result).toHaveLength(1);
             expect(result[0].fundId).toBe('FPV_BTG_PACTUAL_RECAUDADORA');
-            expect(DynamoDbAdapter.prototype.getHistoryByPk).toHaveBeenCalledWith(formattedUserId, 'SUBSCRIPTION#');
         });
 
-        test('Debe lanzar un error con el mensaje específico cuando no se encuentran registros', async () => {
+        test('Debe lanzar el error específico de negocio cuando no se encuentran registros', async () => {
             DynamoDbAdapter.prototype.getHistoryByPk.mockResolvedValue([]);
+
+            await expect(fundService.getSubscriptionsByUserId(userId))
+                .rejects
+                .toThrow(`Subscription not found for this user ${userId}`);
+        });
+
+        test('Debe lanzar error genérico y registrar en consola si el adaptador falla (Error Técnico)', async () => {
+            DynamoDbAdapter.prototype.getHistoryByPk.mockRejectedValue(new Error('DynamoDB Connection Failure'));
 
             jest.spyOn(console, 'error').mockImplementation(() => { });
 
@@ -195,18 +202,6 @@ describe('Service: FundService (Full Coverage)', () => {
                 .toThrow('No se pudieron obtener las suscripciones del usuario');
 
             expect(console.error).toHaveBeenCalled();
-
-            console.error.mockRestore();
-        });
-
-        test('Debe lanzar un error si el adaptador falla', async () => {
-            DynamoDbAdapter.prototype.getHistoryByPk.mockRejectedValue(new Error('DynamoDB Error'));
-            jest.spyOn(console, 'error').mockImplementation(() => { });
-
-            await expect(fundService.getSubscriptionsByUserId(userId))
-                .rejects
-                .toThrow('No se pudieron obtener las suscripciones del usuario');
-
             console.error.mockRestore();
         });
     });

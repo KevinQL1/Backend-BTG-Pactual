@@ -12,7 +12,7 @@ describe('Handler: fundGetSubscribeByUserId', () => {
     beforeEach(() => {
         req = {
             params: { userId: 'USER#1037650134' },
-            originalUrl: '/users/USER#1037650134/funds'
+            originalUrl: '/api/funds/subscriptions/USER#1037650134'
         };
         res = {
             status: jest.fn().mockReturnThis(),
@@ -48,12 +48,24 @@ describe('Handler: fundGetSubscribeByUserId', () => {
         expect(errorPassed.message).toBe("userId is required");
     });
 
-    test('Debe retornar serverError si el servicio lanza una excepción', async () => {
+    test('Debe retornar badRequest si el servicio lanza "Subscription not found"', async () => {
+        const userId = 'USER#1037650134';
+        const customError = new Error(`Subscription not found for this user ${userId}`);
+        mockFundServiceInstance.getSubscriptionsByUserId.mockRejectedValue(customError);
+
+        await fundGetSubscribeByUserIdHandler(req, res);
+
+        expect(badRequest).toHaveBeenCalledWith(res, customError, req.originalUrl);
+        expect(serverError).not.toHaveBeenCalled();
+    });
+
+    test('Debe retornar serverError si el servicio lanza una excepción genérica', async () => {
         const errorMsg = 'Database connection failed';
         mockFundServiceInstance.getSubscriptionsByUserId.mockRejectedValue(new Error(errorMsg));
 
         await fundGetSubscribeByUserIdHandler(req, res);
 
         expect(serverError).toHaveBeenCalledWith(res, errorMsg, req.originalUrl);
+        expect(badRequest).not.toHaveBeenCalled();
     });
 });

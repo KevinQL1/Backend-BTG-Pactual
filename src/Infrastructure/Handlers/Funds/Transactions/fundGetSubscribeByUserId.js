@@ -13,6 +13,10 @@ const fundGetSubscribeByUserIdHandler = async (req, res) => {
 
         return ok(res, subscriptions);
     } catch (error) {
+        if (error.message.includes('Subscription not found')) {
+            return badRequest(res, error, path);
+        }
+
         console.error('Error en fundGetSubscribeByUserIdHandler:', error);
         return serverError(res, error.message, path);
     }
