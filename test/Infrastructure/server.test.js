@@ -23,6 +23,9 @@ jest.mock('#handlers/funds/fundGetByName.js', () => jest.fn((req, res) => res.st
 jest.mock('#handlers/funds/transactions/fundSubscribe.js', () => jest.fn((req, res) => res.status(200).json({ ok: true })));
 jest.mock('#handlers/funds/transactions/fundUnsubscribe.js', () => jest.fn((req, res) => res.status(200).json({ ok: true })));
 
+// NUEVO MOCK: Consulta de suscripciones por usuario
+jest.mock('#handlers/funds/transactions/fundGetSubscribeByUserId.js', () => jest.fn((req, res) => res.status(200).json([])));
+
 // Mock del validador
 jest.mock('#utils/schemaValidator.js', () => {
     return (schema) => (req, res, next) => next();
@@ -70,6 +73,12 @@ describe('Server.js - Full Routing Coverage', () => {
 
         test('DELETE /api/funds/unsubscribe', async () => {
             const res = await request(app).delete('/api/funds/unsubscribe').send({ userId: '1', fundId: 'A' });
+            expect(res.status).toBe(200);
+        });
+
+        // NUEVO TEST: Consulta de suscripciones
+        test('GET /api/funds/subscribe/:userId', async () => {
+            const res = await request(app).get('/api/funds/subscribe/USER#123');
             expect(res.status).toBe(200);
         });
 

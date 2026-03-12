@@ -30,6 +30,7 @@ const fundDelete = require('#handlers/funds/fundDelete.js');
 const fundGetByName = require('#handlers/funds/fundGetByName.js');
 const fundSubscribe = require('#handlers/funds/transactions/fundSubscribe.js');
 const fundUnsubscribe = require('#handlers/funds/transactions/fundUnsubscribe.js');
+const fundGetSubscribeByUserId = require('#handlers/funds/transactions/fundGetSubscribeByUserId.js');
 
 const app = express();
 app.use(express.json());
@@ -48,6 +49,7 @@ app.delete('/api/users/:userId', userDelete);
 // RUTAS DE TRANSACCIONES
 app.post('/api/funds/subscribe', schemaValidator(subscriptionSchema), fundSubscribe);
 app.delete('/api/funds/unsubscribe', schemaValidator(subscriptionSchema), fundUnsubscribe);
+app.get('/api/funds/subscribe/:userId', fundGetSubscribeByUserId);
 
 // RUTAS DE FONDOS
 app.get('/api/funds/search', fundGetByName);

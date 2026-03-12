@@ -159,4 +159,55 @@ describe('Service: FundService (Full Coverage)', () => {
             expect(NotificationSMSService.prototype.send).toHaveBeenCalled();
         });
     });
+
+    // 11. GET SUBSCRIPTIONS BY USER ID
+    describe('getSubscriptionsByUserId', () => {
+        const userId = '1037650134';
+        const formattedUserId = `USER#${userId}`;
+
+        test('Debe mapear y retornar las suscripciones correctamente cuando existen registros', async () => {
+            const mockRecords = [
+                {
+                    pk: formattedUserId,
+                    sk: 'SUBSCRIPTION#FPV_BTG_PACTUAL_RECAUDADORA',
+                    fundName: 'Fondo Recaudadora',
+                    subscribedAt: '2026-03-12T07:00:00Z',
+                    amount: 75000
+                }
+            ];
+
+            DynamoDbAdapter.prototype.getHistoryByPk.mockResolvedValue(mockRecords);
+
+            const result = await fundService.getSubscriptionsByUserId(userId);
+
+            expect(result).toHaveLength(1);
+            expect(result[0].fundId).toBe('FPV_BTG_PACTUAL_RECAUDADORA');
+            expect(DynamoDbAdapter.prototype.getHistoryByPk).toHaveBeenCalledWith(formattedUserId, 'SUBSCRIPTION#');
+        });
+
+        test('Debe lanzar un error con el mensaje específico cuando no se encuentran registros', async () => {
+            DynamoDbAdapter.prototype.getHistoryByPk.mockResolvedValue([]);
+
+            jest.spyOn(console, 'error').mockImplementation(() => { });
+
+            await expect(fundService.getSubscriptionsByUserId(userId))
+                .rejects
+                .toThrow('No se pudieron obtener las suscripciones del usuario');
+
+            expect(console.error).toHaveBeenCalled();
+
+            console.error.mockRestore();
+        });
+
+        test('Debe lanzar un error si el adaptador falla', async () => {
+            DynamoDbAdapter.prototype.getHistoryByPk.mockRejectedValue(new Error('DynamoDB Error'));
+            jest.spyOn(console, 'error').mockImplementation(() => { });
+
+            await expect(fundService.getSubscriptionsByUserId(userId))
+                .rejects
+                .toThrow('No se pudieron obtener las suscripciones del usuario');
+
+            console.error.mockRestore();
+        });
+    });
 });

@@ -45,7 +45,7 @@ Se ha implementado una **Arquitectura Hexagonal (Puertos y Adaptadores)** combin
 | `npm run test:ci` | **Genera el reporte de cobertura**. Actualmente el proyecto cuenta con un **+94% de coverage**. |
 
 ## 📊 Cobertura de Tests
-El proyecto cuenta con una robusta suite de **162 pruebas** que cubren:
+El proyecto cuenta con una robusta suite de **169 pruebas** que cubren:
 * Validación de esquemas y payloads.
 * Lógica de negocio (Saldos iniciales de $500.000, montos mínimos de vinculación, etc.).
 * Integración con servicios de notificación (Mocks).

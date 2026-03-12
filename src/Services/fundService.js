@@ -71,6 +71,26 @@ module.exports = class FundService {
         };
     }
 
+    async getSubscriptionsByUserId(userId) {
+        try {
+            const records = await this.dbAdapter.getHistoryByPk(`USER#${userId}`, 'SUBSCRIPTION#');
+
+            if (!records || records.length === 0) {
+                throw new Error(`Subscription not found for this user ${userId}`);
+            }
+
+            return records.map(record => ({
+                fundId: record.sk.split('#')[1],
+                fundName: record.fundName,
+                subscriptionDate: record.createdAt || record.date,
+                amount: record.amount || 0
+            }));
+        } catch (error) {
+            console.error(`Error en getSubscriptionsByUserId para ${userId}:`, error);
+            throw new Error('No se pudieron obtener las suscripciones del usuario');
+        }
+    }
+
     async updateFund(fundId, data) {
         if (!(await this.getFundById(fundId))) {
             throw new Error("Fund not found");
