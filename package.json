@@ -24,21 +24,21 @@
     "test:ci": "jest --coverage --watchAll=false"
   },
   "jest": {
-  "moduleNameMapper": {
-    "^#handlers/funds/transactions/(.*)$": "<rootDir>/src/Infrastructure/Handlers/Funds/Transactions/$1",
-    "^#handlers/funds/(.*)$": "<rootDir>/src/Infrastructure/Handlers/Funds/$1",
-    "^#schemas/funds/transactions/(.*)$": "<rootDir>/src/Schemas/Funds/Transactions/$1",
-    "^#schemas/funds/(.*)$": "<rootDir>/src/Schemas/Funds/$1",
-    "^#src/(.*)$": "<rootDir>/src/$1",
-    "^#entities/(.*)$": "<rootDir>/src/Entities/$1",
-    "^#infrastructure/(.*)$": "<rootDir>/src/Infrastructure/$1",
-    "^#adapters/(.*)$": "<rootDir>/src/Infrastructure/Adapters/$1",
-    "^#handlers/users/(.*)$": "<rootDir>/src/Infrastructure/Handlers/Users/$1",
-    "^#schemas/users/(.*)$": "<rootDir>/src/Schemas/Users/$1",
-    "^#services/(.*)$": "<rootDir>/src/Services/$1",
-    "^#utils/(.*)$": "<rootDir>/src/Utils/$1"
-  },
-  "testEnvironment": "node"
+    "moduleNameMapper": {
+      "^#handlers/funds/transactions/(.*)$": "<rootDir>/src/Infrastructure/Handlers/Funds/Transactions/$1",
+      "^#handlers/funds/(.*)$": "<rootDir>/src/Infrastructure/Handlers/Funds/$1",
+      "^#schemas/funds/transactions/(.*)$": "<rootDir>/src/Schemas/Funds/Transactions/$1",
+      "^#schemas/funds/(.*)$": "<rootDir>/src/Schemas/Funds/$1",
+      "^#src/(.*)$": "<rootDir>/src/$1",
+      "^#entities/(.*)$": "<rootDir>/src/Entities/$1",
+      "^#infrastructure/(.*)$": "<rootDir>/src/Infrastructure/$1",
+      "^#adapters/(.*)$": "<rootDir>/src/Infrastructure/Adapters/$1",
+      "^#handlers/users/(.*)$": "<rootDir>/src/Infrastructure/Handlers/Users/$1",
+      "^#schemas/users/(.*)$": "<rootDir>/src/Schemas/Users/$1",
+      "^#services/(.*)$": "<rootDir>/src/Services/$1",
+      "^#utils/(.*)$": "<rootDir>/src/Utils/$1"
+    },
+    "testEnvironment": "node"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1007.0",
@@ -49,7 +49,7 @@
     "resend": "^6.9.3",
     "serverless-http": "^4.0.0",
     "twilio": "^5.12.2",
-    "uuid": "^13.0.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
