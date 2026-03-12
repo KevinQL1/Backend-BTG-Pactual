@@ -1,0 +1,43 @@
+# Dependencias
+node_modules/
+jspm_packages/
+
+# Entorno y Secretos (CRÍTICO)
+.env
+.env.local
+.env.*.local
+
+# Serverless
+.serverless/
+.serverless_plugins/
+deployment.zip
+
+# Pruebas y Cobertura
+coverage/
+*.lcov
+.nyc_output/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs y Editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Temporales
+tmp/
+dist/
+build/
