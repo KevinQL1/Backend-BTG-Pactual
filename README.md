@@ -61,7 +61,7 @@ Para facilitar la validación de los endpoints, he adjuntado la colección de so
 > **Nota:** Asegúrate de seleccionar el Environment **"Personal Soft Backend Environment"** en Postman para que las peticiones apunten automáticamente al endpoint desplegado en Lambda o local.
 
 ## 🗄️ SQL (Parte 2 - 20%)
-Resolución de la consulta solicitada en la sección teórica:
+Solución de la consulta solicitada en la sección teórica:
 
 ```sql
 SELECT DISTINCT c.nombre, c.apellidos
