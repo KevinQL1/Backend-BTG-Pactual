@@ -51,6 +51,15 @@ El proyecto cuenta con una robusta suite de **162 pruebas** que cubren:
 * Integración con servicios de notificación (Mocks).
 * Endpoints de la API (Supertest).
 
+## ⚙️ Pruebas con Postman
+
+Para facilitar la validación de los endpoints, he adjuntado la colección de solicitudes y el archivo de variables de entorno (Environment). Puedes importarlos directamente en Postman:
+
+* [📂 Descargar Postman Collection](https://drive.google.com/file/d/1EfvudP3pjzr4G_ZbJcnbSZvnVX9OLzj9/view?usp=drive_link)
+* [🌐 Descargar Postman Environment](https://drive.google.com/file/d/1ZaBfokusr0B-w_jxW7H9OOSiujIILces/view?usp=drive_link)
+
+> **Nota:** Asegúrate de seleccionar el Environment **"Personal Soft Backend Environment"** en Postman para que las peticiones apunten automáticamente al endpoint desplegado en Lambda o local.
+
 ## 🗄️ SQL (Parte 2 - 20%)
 Resolución de la consulta solicitada en la sección teórica:
 
