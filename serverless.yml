@@ -1,16 +1,12 @@
-useDotenv: true
-
-plugins:
-  - serverless-dotenv-plugin
-
 service: btg-pactual-funds
 
 provider:
   name: aws
   runtime: nodejs20.x
   region: ${env:AWS_REGION, 'us-east-1'}
+  deploymentMethod: direct
   environment:
-    DYNAMODB_TABLE: ${env:DYNAMODB_TABLE, 'btg-pactual-funds-table'}
+    DYNAMODB_TABLE: ${env:DYNAMODB_TABLE}
     RESEND_API_KEY: ${env:RESEND_API_KEY}
     TWILIO_ACCOUNT_SID: ${env:TWILIO_ACCOUNT_SID}
     TWILIO_AUTH_TOKEN: ${env:TWILIO_AUTH_TOKEN}
@@ -29,8 +25,8 @@ provider:
             - dynamodb:DeleteItem
             - dynamodb:BatchWriteItem
           Resource: 
-            - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
-            - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}/index/*"
+            - "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+            - "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.DYNAMODB_TABLE}/index/*"
 
 functions:
   api:
